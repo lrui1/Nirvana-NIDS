@@ -1,0 +1,44 @@
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到命令执行攻击——恶意命令关键字";
+    flow:to_server,established;
+    content:"whoami";
+    classtype:命令执行攻击;
+    sid:40000001;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到命令执行攻击——恶意命令关键字";
+    flow:to_server,established;
+    content:"uname";
+    classtype:命令执行攻击;
+    sid:40000003;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到命令执行攻击——恶意命令关键字";
+    flow:to_server,established;
+    content:"ping";
+    classtype:命令执行攻击;
+    sid:40000004;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到命令执行攻击——恶意命令关键字";
+    flow:to_server,established;
+    content:"curl";
+    classtype:命令执行攻击;
+    sid:40000005;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到命令执行攻击——恶意命令关键字";
+    flow:to_server,established;
+    content:"wget";
+    classtype:命令执行攻击;
+    sid:40000006;
+    rev:1;
+)

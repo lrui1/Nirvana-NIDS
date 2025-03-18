@@ -1,0 +1,11 @@
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测文件上传入侵"; 
+    flow:to_server,established;
+    content:"/upload"; 
+    content:"POST";
+    #content:"Content-Type: multipart/form-data";  
+    pcre:"/.(exe|php|jsp|bat|cmd|vbs|ps1|asp|cer|pl|js|htm|html|rb|py|cgi|sh|dll|jar|xml|dat)/i"; 
+    classtype:文件上传攻击; 
+    sid:10000029; 
+    rev:1
+)

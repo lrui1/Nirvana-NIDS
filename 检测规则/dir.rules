@@ -1,0 +1,26 @@
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到目录遍历行为——目录穿越";
+    flow:to_server,established;
+    content:"../";
+    classtype:目录遍历攻击;
+    sid:50000001;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到目录遍历行为——读取敏感文件";
+    flow:to_server,established;
+    content:"/etc/passwd";
+    classtype:目录遍历攻击;
+    sid:50000002;
+    rev:1;
+)
+
+alert tcp any any -> 192.168.1.18 80 (
+    msg:"检测到目录遍历行为——读取敏感文件";
+    flow:to_server,established;
+    content:"/etc/shadow";
+    classtype:目录遍历攻击;
+    sid:50000003;
+    rev:1;
+)

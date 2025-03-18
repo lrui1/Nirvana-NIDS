@@ -1,0 +1,10 @@
+alert http
+(
+    msg:"SERVER-WEBAPP This rule only looks at HTTP traffic";
+    flow:to_server,established;
+    http_uri;
+    content:"/admin.php",fast_pattern,nocase;
+    content:"cmd=",nocase;
+    pcre:"/[?&]cmd=[^&]*?\x3b/i";
+    sid:1;
+)

@@ -1,0 +1,98 @@
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Script Tag";
+    content:"<script", nocase;
+    classtype:XSS注入攻击;
+    sid:20000001; rev:1;
+    metadata:priority 1;  # 设置较高的优先级
+)
+
+
+
+# 检测javascript:伪协议
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - JavaScript Protocol";
+    content:"javascript:", nocase;
+    classtype:XSS注入攻击;
+    sid:20000003; rev:1;
+)
+
+# 检测img标签可能被用于XSS
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Image Tag";
+    content:"<img", nocase;
+    classtype:XSS注入攻击;
+    sid:20000005; rev:1;
+)
+
+# 检测iframe标签可能被用于XSS
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Iframe Tag";
+    content:"<iframe", nocase;
+    classtype:XSS注入攻击;
+    sid:20000006; rev:1;
+)
+
+# 检测base64编码的JavaScript代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Base64 Encoded JavaScript";
+    content:"data:text/javascript;base64,", nocase;
+    classtype:XSS注入攻击;
+    sid:20000007; rev:1;
+)
+
+# 检测HTML注释中的恶意代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - HTML Comment with Code";
+    pcre:"/<!--.*?-->/si";
+    classtype:XSS注入攻击;
+    sid:20000008; rev:1;
+)
+
+
+# 检测内联样式属性中嵌入JavaScript
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Inline Style with JavaScript";
+    pcre:"/style\s*=\s*[\"'].*expression/i";
+    classtype:XSS注入攻击;
+    sid:20000010; rev:1;
+)
+
+# 检测通过srcdoc属性传递的恶意代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Srcdoc Attribute";
+    content:"srcdoc=", nocase;
+    classtype:XSS注入攻击;
+    sid:20000011; rev:1;
+)
+
+# 检测通过data: URI传递的恶意代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Data URI Scheme";
+    content:"data:", nocase;
+    classtype:XSS注入攻击;
+    sid:20000012; rev:1;
+)
+
+# 检测通过form action传递的恶意代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Form Action with Malicious Code";
+    pcre:"/action\s*=\s*[\"'][^\"']*javascript:/i";
+    classtype:XSS注入攻击;
+    sid:20000013; rev:1;
+)
+
+# 检测通过location.href或类似方法重定向到JavaScript代码
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Location Href Redirect to JavaScript";
+    pcre:"/location\.href\s*=.*javascript:/i";
+    classtype:XSS注入攻击;
+    sid:20000014; rev:1;
+)
+
+# 检测通过window.open()方法打开包含JavaScript代码的新窗口
+alert tcp any any -> 192.168.1.18 80  (
+    msg:"检测到XSS攻击 - Window Open with JavaScript";
+    pcre:"/window\.open\s*\(\s*['\"]javascript:/i";
+    classtype:XSS注入攻击;
+    sid:20000015; rev:1;
+)
